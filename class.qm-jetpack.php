@@ -58,7 +58,7 @@ class QM_Jetpack {
 
 		$wp_admin_bar->add_menu( array(
 			'id'     => 'qm-jetpack',
-			'title'  => 'Jetpack',
+			'title'  => 'Debug Jetpack',
 		) );
 
 		$wp_admin_bar->add_menu( array(
