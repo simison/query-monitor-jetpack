@@ -18,9 +18,6 @@ class QM_Jetpack {
 
 		// Conditionals
 		add_filter( 'query_monitor_conditionals', array( __CLASS__, 'get_conditionals' ) );
-
-		// Add toolbar menu
-		add_action( 'wp_before_admin_bar_render', array( __CLASS__, 'add_admin_bar' ), 999 );
 	}
 
 	public static function get_output(array $output, QM_Collectors $collectors) {
@@ -48,40 +45,5 @@ class QM_Jetpack {
 			'qm_jetpack_is_development_version',
 			'qm_jetpack_is_staging_site',
 		 ) );
-	}
-
-	/**
-	 * Creates Jetpack menu at the admin bar
-	 */
-	public static function add_admin_bar() {
-		global $wp_admin_bar;
-
-		$wp_admin_bar->add_menu( array(
-			'id'     => 'qm-jetpack',
-			'title'  => 'Debug Jetpack',
-		) );
-
-		$wp_admin_bar->add_menu( array(
-			'id'     => 'qm-jetpack-debug-external',
-			'parent' => 'qm-jetpack',
-			'title'  => __( 'Jetpack.com Debugger', 'qm-jetpack' ),
-			'href'   => 'https://jetpack.com/support/debug/?url=' . urlencode( get_home_url() )
-		) );
-
-		if ( method_exists( 'Jetpack', 'admin_url' ) ) {
-			$wp_admin_bar->add_menu( array(
-				'id'     => 'qm-jetpack-debug-internal',
-				'parent' => 'qm-jetpack',
-				'title'  => __( 'Jetpack Plugin Debugger', 'qm-jetpack' ),
-				'href'   => Jetpack::admin_url( 'page=jetpack-debugger' )
-			) );
-
-			$wp_admin_bar->add_menu( array(
-				'id'     => 'qm-jetpack-modules',
-				'parent' => 'qm-jetpack',
-				'title'  => __( 'Modules', 'qm-jetpack' ),
-				'href'   => Jetpack::admin_url( 'page=jetpack_modules' )
-			) );
-		}
 	}
 }
